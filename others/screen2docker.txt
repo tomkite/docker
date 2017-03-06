@@ -1,0 +1,6 @@
+Docker_library:
+    - https://github.com/docker-library
+    - https://github.com/docker-library/official-images
+    - https://github.com/tianon/docker-brew-ubuntu-core.git
+
+screen_to_docker4mac: "screen ~/Library/Containers/com.docker.docker/Data/com.docker.driver.amd64-linux/tty"

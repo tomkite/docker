@@ -1,10 +1,10 @@
- 
-07
-oct.
-2014
+07 oct.  2014
+
 Setting up a development environment using Docker and Vagrant
+
 Posté par Mario Loriedo dans Usine logicielle 
 Tags : DevOps, Docker, Vagrant, vmware
+
 Often considered two alternative tools, Docker and Vagrant can be used together to build isolated and repeatable development environments. We will prove it setting up a Docker container for development of a Java application and taking advantage of Vagrant powerful features to solve some real life practical issues.
 
 docker+vagrant

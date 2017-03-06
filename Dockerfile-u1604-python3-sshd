@@ -1,0 +1,30 @@
+############################################################
+# Purpose: Dockerfile to build Ubuntu VM python3 with sshd
+# Name: u1604py3sshd
+# Date: 2017-03-05
+############################################################
+
+# Set the base image to Ubuntu
+FROM u1604py3:01
+
+# File Author / Maintainer
+MAINTAINER "Tom Cai" <thomas_cai@yahoo.com>
+
+# Install ssh
+RUN apt-get install -y openssh-server
+RUN mkdir /var/run/sshd
+RUN mkdir /root/.ssh
+ADD . /host
+ADD ./.ssh /root/.ssh
+
+EXPOSE 22
+CMD    ["/usr/sbin/sshd", "-D"]
+
+##################### INSTALLATION END #####################
+#  docker build -t u1604py3sshd:01 -f Dockerfile-u1604-python3-sshd .
+#  docker run -d -p 8022:22 --name test_sshd u1604py3sshd:01
+#  docker port test_sshd 22
+#  ssh -i .ssh/id_rsa root@localhost -p 8022
+#  ssh localdocker
+#  docker stop test_sshd && docker rm -f test_sshd
+
