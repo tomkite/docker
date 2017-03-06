@@ -1,1 +1,13 @@
-.idea/*
+# ignore git metadata
+.git/**
+
+# ignore IDE  metadata
+.idea/**
+
+# ignore ssh credentials
+.ssh/**
+
+# ignore all temp or tmp files or directories
+**/tmp
+**/temp
+
