@@ -4,8 +4,8 @@
 # Date: 2017-03-05
 ############################################################
 
-# Set the base image to Ubuntu
-FROM ubuntu:16.04
+# Set the base image to u1604sshd:01, which was based on ubuntu:16.04
+FROM u1604sshd:01 
 
 # File Author / Maintainer
 MAINTAINER "Tom Cai" <thomas_cai@yahoo.com>
@@ -14,19 +14,16 @@ MAINTAINER "Tom Cai" <thomas_cai@yahoo.com>
 RUN apt-get update
 RUN apt-get upgrade -y
 
-# Install basic os tools
-RUN apt-get install -y net-tools curl vim man tree
-
 # Install python3
 RUN apt-get install -y python3-setuptools
 RUN apt-get install -y build-essential libssl-dev libffi-dev python-dev
 RUN apt-get install -y python3-pip python3-venv ipython3
 
-CMD ["/bin/bash"]
+CMD ["/usr/sbin/sshd", "-D"]
 
 ##################### INSTALLATION END #####################
 
 ##################### TEST STEPS #####################
 #  docker build -t u1604py3:01 -f Dockerfile-u1604-python3 .
-#  docker run -it --hostname u1604py3 --name u1604py3 --rm u1604py3:01
+#  docker run -d --hostname py3 --name py3 -p 8023:22 -v /Users/tahoe:/host u1604py3:01
 ##################### TEST END #####################

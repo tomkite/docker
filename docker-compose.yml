@@ -1,0 +1,44 @@
+version: "3"
+
+services:
+  image:
+    build:
+      context: .
+      args:
+        SALTSTACK_VERSION: ${SALTSTACK_VERSION}
+    image: tomkite/saltstack-image
+    container_name: salt-image
+
+  master:
+    build:
+      context: .
+      dockerfile: Dockerfile-master
+    image: tomkite/saltstack-master
+    container_name: salt-master
+    hostname: salt-master
+    privileged: true
+    depends_on:
+      - image
+    ports:
+      - "4505:4505"
+      - "4506:4506"
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+#      - ./assets/master/etc/salt/master:/etc/salt/master
+#      - ./assets/master/srv/pillar/dev/pods/pod_defaults.sls:/srv/pillar/dev/pods/pod_defaults.sls
+#      - ./assets/master/srv/pillar/dev/pod_update_company.sls:/srv/pillar/dev/pod_update_company.sls
+#      - ${PILLAR_DIR}:/srv/pillar
+#      - ${SALT_DIR}:/srv/salt
+
+  minion:
+    build:
+      context: .
+      dockerfile: Dockerfile-minion
+    image: tomkite/saltstack-minion
+    container_name: salt-minion
+    hostname: salt-minion
+    privileged: true
+    depends_on:
+      - image
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
