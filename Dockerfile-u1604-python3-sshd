@@ -24,7 +24,7 @@ RUN pip install virtualenvwrapper
 RUN printf 'export WORKON_HOME=$HOME/venv\nexport PROJECT_HOME=$HOME/proj\nsource /usr/local/bin/virtualenvwrapper.sh' > ~/.bashrc
 
 EXPOSE 22
-CMD    ["/usr/sbin/sshd", "-D"]
+CMD ["/usr/sbin/sshd", "-D"]
 
 ##################### INSTALLATION END #####################
 #  docker build -t u1604py3sshd:01 -f Dockerfile-u1604-python3-sshd .
