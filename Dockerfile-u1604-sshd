@@ -15,7 +15,7 @@ RUN apt-get update
 RUN apt-get upgrade -y
 
 # Install basic os tools
-RUN apt-get install -y net-tools curl vim man tree rsync
+RUN apt-get install -y net-tools curl vim man tree rsync screen less
 
 # Install ssh
 RUN apt-get install -y openssh-server
@@ -27,7 +27,7 @@ CMD ["/usr/sbin/sshd", "-D"]
 
 ##################### INSTALLATION END #####################
 #  docker build -t u1604sshd:01 -f Dockerfile-u1604-sshd .
-#  docker run -d -p 8023:22 --name u1604sshd --hostname -v /Users/tahoe/:/tahoe u1604sshd u1604sshd:01
+#  docker run -d -p 8023:22 --name u1604sshd --hostname -v /Users/tahoe/data:/data u1604sshd u1604sshd:01
 #  docker port u1604sshd 22
 #  ssh -i .ssh/id_rsa root@localhost -p 8022
 #  ssh localdocker

@@ -5,14 +5,34 @@
 ############################################################
 
 # Set the base image to Ubuntu
-FROM u1404sshd:01
+FROM ubuntu:14.04
 
 # File Author / Maintainer
 MAINTAINER "Tom Cai" <thomas_cai@yahoo.com>
 
-# Install python2.7 tools
+# Update the repository sources list
+RUN apt-get update
+RUN apt-get upgrade -y
+
+# Install basic os tools
+RUN apt-get install -y net-tools curl vim man tree rsync screen less
+
+# Install ssh
+RUN apt-get install -y openssh-server
+RUN mkdir /var/run/sshd
+ADD ./.ssh /root/.ssh
+
+# Set locale
+RUN export LC_C=C
+
+# Install nginx
+RUN apt-get install -y nginx
+
+# Install python2.7 related packages
 RUN apt-get install -y build-essential python-dev libsqlite3-dev libreadline6-dev libgdbm-dev zlib1g-dev libbz2-dev sqlite3 zip
 RUN apt-get install -y python-pip
+RUN pip install flask
+
 RUN pip install virtualenv
 RUN pip install virtualenvwrapper
 RUN mkdir -p ~/venv ~/proj

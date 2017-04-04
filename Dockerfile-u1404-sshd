@@ -5,6 +5,7 @@
 ############################################################
 
 # Set the base image to Ubuntu
+#FORM u1404sshd:01
 FROM ubuntu:14.04
 
 # File Author / Maintainer
@@ -15,26 +16,19 @@ RUN apt-get update
 RUN apt-get upgrade -y
 
 # Install basic os tools
-RUN apt-get install -y net-tools curl vim man tree
+RUN apt-get install -y net-tools curl vim man tree rsync screen less
 
 # Install ssh
 RUN apt-get install -y openssh-server
 RUN mkdir /var/run/sshd
 ADD ./.ssh /root/.ssh
 
-# Install python2.7 tools
-RUN apt-get install -y python-pip
-RUN mkdir -p ~/venv ~/proj
-RUN pip install virtualenv
-RUN pip install virtualenvwrapper
-RUN printf 'export WORKON_HOME=$HOME/venv\nexport PROJECT_HOME=$HOME/proj\nsource /usr/local/bin/virtualenvwrapper.sh' > ~/.bashrc
-
 EXPOSE 22
 CMD    ["/usr/sbin/sshd", "-D"]
 
 ##################### INSTALLATION END #####################
 #  docker build -t u1404sshd:01 -f Dockerfile-u1404-sshd .
-#  docker run -d --name py2 --hostname py2 -v /Users/tahoe/data:/data -p 8022:22 u1404sshd:01
+#  docker run -d --name u1404sshd --hostname u1404sshd -v /Users/tahoe/data:/data -p 8022:22 u1404sshd:01
 #  ssh localdocker2
 #  docker port u1404sshd 22
 #  ssh -i .ssh/id_rsa root@localhost -p 8022

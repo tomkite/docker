@@ -1,44 +1,30 @@
 version: "3"
 
 services:
-  image:
+  py2:
     build:
       context: .
-      args:
-        SALTSTACK_VERSION: ${SALTSTACK_VERSION}
-    image: tomkite/saltstack-image
-    container_name: salt-image
-
-  master:
-    build:
-      context: .
-      dockerfile: Dockerfile-master
-    image: tomkite/saltstack-master
-    container_name: salt-master
-    hostname: salt-master
+      dockerfile: Dockerfile-u1404sshd-python2
+    image: tomkite/u1404py2:01
+    container_name: py2
+    hostname: py2
     privileged: true
-    depends_on:
-      - image
     ports:
-      - "4505:4505"
-      - "4506:4506"
+      - "8022:22"
+      - "8082:80"
     volumes:
-      - /sys/fs/cgroup:/sys/fs/cgroup:ro
-#      - ./assets/master/etc/salt/master:/etc/salt/master
-#      - ./assets/master/srv/pillar/dev/pods/pod_defaults.sls:/srv/pillar/dev/pods/pod_defaults.sls
-#      - ./assets/master/srv/pillar/dev/pod_update_company.sls:/srv/pillar/dev/pod_update_company.sls
-#      - ${PILLAR_DIR}:/srv/pillar
-#      - ${SALT_DIR}:/srv/salt
+      - /Users/tom/data/:/data
 
-  minion:
+  py3:
     build:
       context: .
-      dockerfile: Dockerfile-minion
-    image: tomkite/saltstack-minion
-    container_name: salt-minion
-    hostname: salt-minion
+      dockerfile: Dockerfile-u1604sshd-python3
+    image: tomkite/u1604py3:01
+    container_name: py3
+    hostname: py3
     privileged: true
-    depends_on:
-      - image
+    ports:
+      - "8023:22"
+      - "8083:80"
     volumes:
-      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+      - /Users/tom/data/:/data

@@ -1,16 +1,33 @@
 # Build and use images
 
-## build and run u1604py3:01 image from ubuntu:16.04
+## build py2 and py3 images
 ```
-docker build -t u1604py3:01 -f Dockerfile-u1604-python3 .
-docker run -it --hostname u1604py3 --name u1604py3 --rm u1604py3:01
-docker rm -f u1604py3
+docker-compose down --rmi all
+docker-compose build --force-rm
+# or
+docker-compose build --no-cache
+docker-compose build
+# or
+docker-compose up -d
+```
+
+## run py2 from ubuntu:14.04
+```
+docker run -d --hostname py2 --name py2 -p 8082:80 -p 8022:22 -v /Users/tom/data:/data tomkite/u1404py2:01
+ssh localdocker2
+docker rm -f py2
+```
+
+## build and run py3 from ubuntu:16.04
+```
+docker run -d --hostname py3 --name py3 -p 8083:80 -p 8023:22 -v /Users/tom/data:/data tomkite/u1604py3:01
+docker rm -f py3
 ```
 
 ## build and run u1604py3sshd:01 image from u1604py3:01
 ```
-docker build -t u1604py3sshd:01 -f Dockerfile-u1604-python3-sshd .
-docker run -d -p 8022:22 --name test_sshd u1604py3sshd:01
+docker build -t u1604sshd:01 -f Dockerfile-u1604-sshd .
+docker run -d -p 8022:22 --name test_sshd u1604sshd:01
 docker port test_sshd 22
 ssh -i .ssh/id_rsa root@localhost -p 8022
 ssh localdocker #requires .ssh/config and /etc/hosts changes

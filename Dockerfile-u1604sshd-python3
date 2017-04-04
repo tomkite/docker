@@ -5,15 +5,34 @@
 ############################################################
 
 # Set the base image to Ubuntu
-FROM u1604sshd:01
+#FROM u1604sshd:01
+FROM ubuntu:16.04
 
 # File Author / Maintainer
 MAINTAINER "Tom Cai" <thomas_cai@yahoo.com>
 
-# Install python3
-RUN apt-get install -y build-essential libssl-dev libffi-dev python-dev
-RUN apt-get install -y python3-setuptools
-RUN apt-get install -y python3-pip python3-venv ipython3
+# Update the repository sources list
+RUN apt-get update
+RUN apt-get upgrade -y
+
+# Install basic os tools
+RUN apt-get install -y net-tools curl vim man tree rsync screen less
+
+# Install ssh
+RUN apt-get install -y openssh-server
+RUN mkdir /var/run/sshd
+ADD ./.ssh /root/.ssh
+
+# Set locale
+RUN export LC_C=C
+
+# Install nginx
+RUN apt-get install -y nginx
+
+# Install python3 related packages
+RUN apt-get install -y build-essential libssl-dev libffi-dev python-dev openssl
+RUN apt-get install -y python3-setuptools python3-pip python3-venv ipython3
+RUN pip3 install flask
 
 EXPOSE 22
 CMD ["/usr/sbin/sshd", "-D"]
